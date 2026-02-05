@@ -1,0 +1,9 @@
+[project]
+name = "AI_Engine"
+version = "0.1.0"
+description = "This is an playground for AI agents to code within. Constraints are clearly outlined and code is cleary displayed."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pytest>=9.0.2",
+]
