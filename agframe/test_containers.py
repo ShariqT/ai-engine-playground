@@ -1,7 +1,6 @@
-from usecases.container import Container
+from usecases.container import Container, Error
 from actions.action import Action
 from commands.command import Command
-from errors.error import Error
 
 class Action1(Action):
   def do(self, context, request):
@@ -72,7 +71,7 @@ def test_failed_step():
   print(results)
   assert type(results) is Error
   assert results.data['failure'] == "getting emails failed processing"
-  assert results.data['failure_reason'] == "failedaction step could not return answer"
+  assert results.data['failure_reason'] == "Failed action: test2 because of failedaction step could not return answer"
 
 def test_step_rollback_failed():
   t = Action1("test")

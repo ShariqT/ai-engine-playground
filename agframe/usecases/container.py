@@ -1,4 +1,8 @@
-from errors.error import Error
+class Error:
+  def __init__(self, data):
+    self.data = data
+  def __str__(self):
+    return str(self.data)
 
 class Container:
   def __init__(self, steps, name):
@@ -28,17 +32,14 @@ class Container:
               self.returned_value.update(result)
       return self.returned_value
     except Exception as e:
-      print("starting rollback")
       self.failed = True
-      self.failed_reason = str(e)
+      failed_action_name = self.steps[idx].name
+      self.failed_reason = f"Failed action: {failed_action_name} because of {str(e)}"
       self.failed_index = idx
       return self.rollback()
   
   def rollback(self):
-    print("rollback")
     steps_to_rollback = self.steps[0:self.failed_index + 1]
-    print(steps_to_rollback)
-    print(self.failed_index)
     try:
       for step in steps_to_rollback:
         step.rollback()
@@ -48,7 +49,6 @@ class Container:
         "failure_reason": self.failed_reason
       })
     except Exception as e:
-      print("rollback failed")
       self.failed_rollback = True
       self.failed_rollback_reason = str(e)
       return Error({
