@@ -69,6 +69,7 @@ def test_failed_step():
   use_case = Container([t,b,f], "getting emails")
   results = use_case.input(do_it)
   print(results)
+  assert isinstance(results, Error) is True
   assert type(results) is Error
   assert results.data['failure'] == "getting emails failed processing"
   assert results.data['failure_reason'] == "Failed action: test2 because of failedaction step could not return answer"
@@ -80,7 +81,7 @@ def test_step_rollback_failed():
   use_case = Container([t,z], "getting emails")
   results = use_case.input(do_it)
   print(results)
-  assert type(results) is Error
+  assert isinstance(results, Error) is True
   assert "failed_rollback" in results.data.keys()
   assert results.data['failed_rollback'] == "rollbackaction failed rollback"
 

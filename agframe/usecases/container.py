@@ -20,8 +20,18 @@ class Container:
     self.command = command
     return self.start()
 
+  def reset(self):
+    self.returned_value = {}
+    self.failed = False
+    self.failed_reason = None
+    self.failed_index = None
+    self.failed_rollback = False
+    self.failed_rollback_reason = False
+    self.returned_value = {}
+
   def start(self):
     try:
+      self.reset()
       for idx, step in enumerate(self.steps):
         result = step.do(self.returned_value, self.command.request)
         if result is not None:
